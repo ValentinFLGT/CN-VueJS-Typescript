@@ -10,8 +10,9 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import {onMounted} from "vue";
 import axios from "axios";
+import {defineComponent} from "vue";
 
-export default {
+export default defineComponent({
   name: 'CitiesMap',
   setup() {
     onMounted(() => {
@@ -52,7 +53,7 @@ export default {
     });
     return {};
   },
-};
+})
 </script>
 
 <style scoped>

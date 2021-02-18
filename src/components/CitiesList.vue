@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Liste des villes</h1>
+    <h1>Liste des villes, hello from ts!</h1>
     <City v-for="city of cities" :key="city.id" :name="city.name" :weather="city.weather" :temperature="city.temperature" :updated-at="city.updatedAt"></City>
   </div>
 </template>

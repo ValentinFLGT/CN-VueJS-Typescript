@@ -11,7 +11,7 @@
 
 import {defineComponent} from "vue";
 import moment from 'moment';
-import {useStore} from "@/store/store";
+import {useStore} from "@/store";
 
 export default defineComponent({
   name: 'City',
@@ -31,10 +31,7 @@ export default defineComponent({
     store.commit('increment')
     return { count: store.state.count}
   }
-
 })
-
-
 </script>
 
 <style scoped>

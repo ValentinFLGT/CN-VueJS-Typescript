@@ -1,6 +1,6 @@
 import { createApp } from 'vue';
-import { store, key} from "@/store/store";
+import { index, key} from "@/store";
 import App from './App.vue'
 import router from "@/router";
 
-createApp(App).use(router).use(store, key).mount('#app');
+createApp(App).use(router).use(index, key).mount('#app');

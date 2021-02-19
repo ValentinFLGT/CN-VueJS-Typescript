@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Carte des villes</h1>
+    <h1>Carte des villes, je push ma branche</h1>
     <div id="map"/>
   </div>
 </template>

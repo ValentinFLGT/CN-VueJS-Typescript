@@ -19,25 +19,16 @@ export default defineComponent({
     City
   },
   setup() {
+
+    // Avant de faire un appel axios, regarder les data du localStorage et initialiser le store avec ça et ensuite si c'est périmé faire un appel axios
+
     const store = useStore()
 
-    function timer() {
-      store.commit('decrement')
-    }
-
-    setInterval(timer, 1000)
+    store.dispatch('axiosRequest')
+    store.dispatch('countdown')
+    store.dispatch('refreshData')
 
 
-    function refreshData() {
-      store.commit('emptyCitiesWeather')
-      store.commit('loadCitiesWeather')
-      store.commit('refreshTimer')
-    }
-
-    // 300k ms stand for 5 minutes
-    setInterval(refreshData, 300000)
-
-    store.commit('loadCitiesWeather')
     return {cityWeather: store.state.cityWeather}
   },
   computed: {
@@ -52,7 +43,6 @@ export default defineComponent({
       }
     },
 
-    ...mapState(['count']),
     ...mapState(['loadCitiesWeather'])
   }
 })

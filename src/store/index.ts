@@ -15,35 +15,54 @@ export const index = createStore<State>({
         cityWeather: []
     },
     mutations: {
-        increment(state) {
-            state.count++
-        },
+
         decrement(state) {
             state.count--
         },
-        refreshTimer(state) {
+
+        refreshCountdown(state) {
             return state.count = 300
         },
+
         emptyCitiesWeather(state) {
             state.cityWeather.length = 0
         },
-        loadCitiesWeather(state) {
+
+        loadCitiesWeather(state, payload) {
+            for (const {
+                name,
+                weather: [{description: weather}],
+                main: {temp: temperature},
+                dt: updatedAt
+            } of payload.data.list) {
+                state.cityWeather.push({name, weather, temperature, updatedAt: new Date(updatedAt * 1000)});
+            }
+        }
+    },
+    actions: {
+        axiosRequest({commit}) {
             axios.get(`https://api.openweathermap.org/data/2.5/find?lat=${process.env.VUE_APP_DEFAULT_LATITUDE}&lon=${process.env.VUE_APP_DEFAULT_LONGITUDE}&cnt=20&cluster=yes&lang=fr&units=metric&APPID=${process.env.VUE_APP_OW_APP_ID}`)
                 .then(function (resp) {
-                    for (const {
-                        name,
-                        weather: [{description: weather}],
-                        main: {temp: temperature},
-                        dt: updatedAt
-                    } of resp.data.list) {
-                        state.cityWeather.push({name, weather, temperature, updatedAt: new Date(updatedAt * 1000)});
-                    }
+                    commit('loadCitiesWeather', resp)
                 })
+        },
+
+        countdown({commit}) {
+            setInterval(() => {
+                commit('decrement')
+            }, 1000)
+        },
+
+        refreshData({commit, dispatch}) {
+            setInterval(() => {
+                commit('emptyCitiesWeather')
+                dispatch('axiosRequest')
+                commit('refreshCountdown')
+            }, 300000)
         }
     }
 })
 
-// define your own `useStore` composition function
 export function useStore() {
     return baseUseStore(key)
 }

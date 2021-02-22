@@ -1,5 +1,5 @@
 <template>
-  <h2>Délai avant rafraichissement : {{ count }}</h2>
+  <h2>Rafraîchissement automatique : {{ formatSecondsInMinute }}</h2>
   <div>
     <h1>Liste des villes</h1>
     <City v-for="city of cityWeather" :key="city.id" :name="city.name" :weather="city.weather"
@@ -41,6 +41,17 @@ export default defineComponent({
     return {cityWeather: store.state.cityWeather}
   },
   computed: {
+
+    formatSecondsInMinute(){
+      const store = useStore()
+      if(store.state.count > 60){
+        // Divide by 60 to round seconds in minutes then modulo to find the remaining seconds
+        return `0${Math.floor(store.state.count / 60)} m : ${store.state.count % 60} s`
+      } else {
+        return `${store.state.count} s`; // Return basic timer if no minutes
+      }
+    },
+
     ...mapState(['count']),
     ...mapState(['loadCitiesWeather'])
   }

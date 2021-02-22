@@ -22,7 +22,7 @@ export const index = createStore<State>({
             state.count--
         },
         refreshTimer(state) {
-            return state.count = 3
+            return state.count = 300
         },
         emptyCitiesWeather(state) {
             state.cityWeather.length = 0

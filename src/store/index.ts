@@ -12,7 +12,7 @@ export const key: InjectionKey<Store<State>> = Symbol()
 
 export const index = createStore<State>({
     state: {
-        countdown: 300,
+        countdown: 30,
         cityWeather: []
     },
     mutations: {
@@ -21,7 +21,7 @@ export const index = createStore<State>({
         },
 
         refreshCountdown(state) {
-            return state.countdown = 300
+            return state.countdown = 30
         },
 
         emptyCitiesWeather(state) {
@@ -46,14 +46,41 @@ export const index = createStore<State>({
                     updatedAt: new Date(updatedAt * 1000)
                 });
             }
-        }
+        },
+
+        loadCitiesWeatherFromLocalStorage(state) {
+            for (const {
+                name,
+                coord: {lat, lon},
+                weather: [{description: weather, icon: icon}],
+                main: {temp: temperature},
+                dt: updatedAt
+            } of JSON.parse(localStorage.citiesWeather)) {
+                state.cityWeather.push({
+                    name,
+                    lat,
+                    lon,
+                    weather,
+                    icon,
+                    temperature,
+                    updatedAt: new Date(updatedAt * 1000)
+                });
+            }
+        },
     },
     actions: {
-        axiosRequest({commit}) {
-            axios.get(`https://api.openweathermap.org/data/2.5/find?lat=${process.env.VUE_APP_DEFAULT_LATITUDE}&lon=${process.env.VUE_APP_DEFAULT_LONGITUDE}&cnt=20&cluster=yes&lang=fr&units=metric&APPID=${process.env.VUE_APP_OW_APP_ID}`)
-                .then(function (resp) {
-                    commit('loadCitiesWeather', resp)
-                })
+        axiosRequest({commit, state}) {
+            if (!localStorage.citiesWeather || state.countdown === 0) {
+                axios.get(`https://api.openweathermap.org/data/2.5/find?lat=${process.env.VUE_APP_DEFAULT_LATITUDE}&lon=${process.env.VUE_APP_DEFAULT_LONGITUDE}&cnt=20&cluster=yes&lang=fr&units=metric&APPID=${process.env.VUE_APP_OW_APP_ID}`)
+                    .then(function (resp) {
+                        commit('loadCitiesWeather', resp)
+                        localStorage.setItem('citiesWeather', JSON.stringify(resp.data.list))
+                        console.log("Data loaded from OWM API!")
+                    })
+            } else {
+                commit('loadCitiesWeatherFromLocalStorage', JSON.parse(localStorage.getItem('citiesWeather') || "Bite"))
+                console.log("Data loaded from your browser local storage!")
+            }
         },
 
         countdown({commit}) {
@@ -66,8 +93,10 @@ export const index = createStore<State>({
             setInterval(() => {
                 commit('emptyCitiesWeather')
                 dispatch('axiosRequest')
-                commit('refreshCountdown')
-            }, 300000)
+                    .then(() => {
+                        commit('refreshCountdown');
+                    });
+            }, 30000)
         },
     }
 })

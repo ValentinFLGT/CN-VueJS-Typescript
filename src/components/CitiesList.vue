@@ -18,32 +18,19 @@ export default defineComponent({
   components: {
     City
   },
-  setup() {
-
-    // Avant de faire un appel axios, regarder les data du localStorage et initialiser le store avec ça et ensuite si c'est périmé faire un appel axios
-
-    const store = useStore()
-
-    store.dispatch('axiosRequest')
-    store.dispatch('countdown')
-    store.dispatch('refreshData')
-
-
-    return {cityWeather: store.state.cityWeather}
-  },
   computed: {
-
-    formatSecondsInMinute(){
+    formatSecondsInMinute() {
       const store = useStore()
-      if(store.state.count > 60){
+      if (store.state.countdown > 60) {
         // Divide by 60 to round seconds in minutes then modulo to find the remaining seconds
-        return `0${Math.floor(store.state.count / 60)} m : ${store.state.count % 60} s`
+        return `0${Math.floor(store.state.countdown / 60)} m : ${store.state.countdown % 60} s`
       } else {
-        return `${store.state.count} s`; // Return basic timer if no minutes
+        return `${store.state.countdown} s`; // Return basic timer if no minutes
       }
     },
 
-    ...mapState(['loadCitiesWeather'])
+    ...mapState(['cityWeather']),
+    ...mapState(['countdown'])
   }
 })
 </script>

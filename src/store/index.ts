@@ -3,25 +3,25 @@ import {createStore, useStore as baseUseStore, Store} from 'vuex'
 import axios from "axios";
 
 export interface State {
-    count: number
+    countdown: number
     cityWeather: Array<object>
+
 }
 
 export const key: InjectionKey<Store<State>> = Symbol()
 
 export const index = createStore<State>({
     state: {
-        count: 300,
+        countdown: 300,
         cityWeather: []
     },
     mutations: {
-
         decrement(state) {
-            state.count--
+            state.countdown--
         },
 
         refreshCountdown(state) {
-            return state.count = 300
+            return state.countdown = 300
         },
 
         emptyCitiesWeather(state) {
@@ -31,11 +31,20 @@ export const index = createStore<State>({
         loadCitiesWeather(state, payload) {
             for (const {
                 name,
-                weather: [{description: weather}],
+                coord: {lat, lon},
+                weather: [{description: weather, icon: icon}],
                 main: {temp: temperature},
                 dt: updatedAt
             } of payload.data.list) {
-                state.cityWeather.push({name, weather, temperature, updatedAt: new Date(updatedAt * 1000)});
+                state.cityWeather.push({
+                    name,
+                    lat,
+                    lon,
+                    weather,
+                    icon,
+                    temperature,
+                    updatedAt: new Date(updatedAt * 1000)
+                });
             }
         }
     },
@@ -59,7 +68,7 @@ export const index = createStore<State>({
                 dispatch('axiosRequest')
                 commit('refreshCountdown')
             }, 300000)
-        }
+        },
     }
 })
 

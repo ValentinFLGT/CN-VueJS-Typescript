@@ -8,7 +8,7 @@ const routes = [
   { path: '/', component: EasterEgg},
   { path: '/ville', component: City},
   { path: '/villes', component: CitiesList},
-  { path: '/carte', component: CitiesMap},
+  { path: '/carte', component: CitiesMap}
 ];
 
 const router = createRouter({

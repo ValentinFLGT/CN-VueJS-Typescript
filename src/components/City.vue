@@ -24,10 +24,7 @@ export default defineComponent({
       return moment(this.updatedAt).fromNow();
     }
   }
-
 })
-
-
 </script>
 
 <style scoped>

@@ -12,10 +12,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import {defineComponent} from "vue";
+import {useStore} from "@/store";
 
-export default defineComponent ({
-  name: 'App'
+
+export default defineComponent({
+  name: 'App',
+  setup() {
+    const store = useStore()
+
+    store.dispatch('axiosRequest')
+    store.dispatch('countdown')
+    store.dispatch('refreshData')
+
+    return {cityWeather: store.state.cityWeather}
+  }
 })
 </script>
 

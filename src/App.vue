@@ -5,6 +5,7 @@
       <div>
         <router-link to="/villes">Liste</router-link>
         <router-link to="/carte">Carte</router-link>
+        <router-link to="/form">Formulaire</router-link>
       </div>
     </header>
     <router-view></router-view>
@@ -12,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
+import {defineComponent, onMounted} from "vue";
 import {useStore} from "@/store";
 
 
@@ -20,12 +21,14 @@ export default defineComponent({
   name: 'App',
   setup() {
     const store = useStore()
-
-    store.dispatch('axiosRequest')
-    store.dispatch('countdown')
-    store.dispatch('refreshData')
-
-    return {cityWeather: store.state.cityWeather}
+    store.commit('initialiseStore')
+    onMounted(() => {
+      store.subscribe((mutation, state) => {
+        localStorage.setItem('store', JSON.stringify(state))
+      })
+      store.dispatch('loadCityWeatherDataAsync')
+      store.dispatch('countdownAsync')
+    })
   }
 })
 </script>

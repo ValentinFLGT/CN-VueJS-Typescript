@@ -2,8 +2,9 @@
   <h2>Rafraîchissement automatique : {{ formatSecondsInMinute }}</h2>
   <div>
     <h1>Liste des villes</h1>
-    <City v-for="city of cityWeather" :key="city.id" :name="city.name" :weather="city.weather"
-          :temperature="city.temperature" :updated-at="city.updatedAt"></City>
+    <cities-form/>
+    <city v-for="city of cityWeather" :key="city.id" :name="city.name" :weather="city.weather"
+          :temperature="city.temperature" :updated-at="city.updatedAt"></city>
   </div>
 </template>
 
@@ -12,10 +13,12 @@ import {defineComponent} from "vue";
 import City from "@/components/City.vue";
 import {useStore} from "@/store";
 import {mapState} from "vuex";
+import CitiesForm from "@/components/CitiesForm.vue";
 
 export default defineComponent({
   name: 'CitiesList',
   components: {
+    CitiesForm,
     City
   },
   computed: {
@@ -29,8 +32,7 @@ export default defineComponent({
       }
     },
 
-    ...mapState(['cityWeather']),
-    ...mapState(['countdown'])
+    ...mapState(['cityWeather'])
   }
 })
 </script>

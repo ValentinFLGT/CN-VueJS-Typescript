@@ -1,10 +1,12 @@
 import {InjectionKey} from 'vue'
 import {createStore, useStore as baseUseStore, Store} from 'vuex'
 import axios from "axios";
+import CitiesForm from "@/components/CitiesForm.vue";
 
 export interface State {
     countdown: number
     cityWeather: Array<object>
+    selectedCities: Array<object>
 }
 
 export const key: InjectionKey<Store<State>> = Symbol()
@@ -12,7 +14,8 @@ export const key: InjectionKey<Store<State>> = Symbol()
 export const index = createStore<State>({
     state: {
         countdown: 30,
-        cityWeather: []
+        cityWeather: [],
+        selectedCities: []
     },
     mutations: {
         initialiseStore(state) {
@@ -51,6 +54,9 @@ export const index = createStore<State>({
                 });
             }
         },
+        loadSelectedCityWeatherData(state, payload) {
+            state.selectedCities.push(payload.data)
+        },
     },
     actions: {
         loadCityWeatherDataAsync({commit, state}) {
@@ -63,6 +69,13 @@ export const index = createStore<State>({
             } else {
                 console.log(`Data will be reloaded in ${state.countdown} s`)
             }
+        },
+        loadSelectedCitiesDataAsync({commit}, cityName) {
+            // cityName = CitiesForm.selectedCity
+            axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${process.env.VUE_APP_OW_APP_ID}`)
+                .then(function (resp) {
+                    commit('loadSelectedCityWeatherData', resp)
+                })
         },
         countdownAsync({commit, dispatch, state}) {
             setInterval(() => {

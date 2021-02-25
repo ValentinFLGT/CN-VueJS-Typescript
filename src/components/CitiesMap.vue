@@ -57,8 +57,7 @@ export default defineComponent({
       }
     },
 
-    ...mapState(['cityWeather']),
-    ...mapState(['countdown'])
+    ...mapState(['cityWeather'])
   }
 })
 </script>

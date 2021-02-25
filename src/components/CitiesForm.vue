@@ -1,28 +1,36 @@
 <template>
   <div id="v-model-select" class="demo">
-    <select v-model="selected" multiple>
-      <option v-for="city of cityWeather" :value="city.name">{{city.name}}</option>
+    <select v-model="selectedCity">
+      <option v-for="city of cityWeather" :key="city.index" :value="city">{{ city.name }}</option>
     </select>
-    <br/>
-    <br/>
-    <span>Selected: {{ selected }}</span>
+    <city v-if="selectedCity" :name="selectedCity.name" :weather="selectedCity.weather"
+          :temperature="selectedCity.temperature" :updated-at="selectedCity.updatedAt"></city>
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
+import {defineComponent, onUpdated} from "vue";
 import {mapState} from "vuex";
+import City from "@/components/City.vue";
+import {useStore} from "@/store";
 
 export default defineComponent({
   name: "CitiesForm",
+  components: {City},
   data() {
     return {
-      selected: ''
+      selectedCity: ''
     }
+  },
+  setup() {
+    const store = useStore()
+    onUpdated(() => {
+      store.dispatch('loadSelectedCitiesDataAsync')
+    })
   },
   computed: {
     ...mapState(['cityWeather']),
-    ...mapState(['countdown'])
+    ...mapState(['selectedCities'])
   }
 })
 </script>

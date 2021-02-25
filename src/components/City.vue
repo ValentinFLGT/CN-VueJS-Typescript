@@ -17,7 +17,7 @@ export default defineComponent({
     name: String,
     weather: String,
     temperature: Number,
-    updatedAt: Date
+    updatedAt: [Date, String]
   },
   methods: {
     currentDateTime() {

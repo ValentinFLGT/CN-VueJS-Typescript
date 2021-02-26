@@ -31,7 +31,6 @@ export default defineComponent({
         return `${store.state.countdown} s`; // Return basic timer if no minutes
       }
     },
-
     ...mapState(['cityWeather'])
   }
 })

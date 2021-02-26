@@ -1,18 +1,14 @@
 import { createI18n} from "vue-i18n";
+import en from "../assets/translations/translation.en"
+import fr from "../assets/translations/translation.fr"
 
 const messages = {
-    en: {
-        hi: "Hello!",
-        test: "Test",
-    },
-    fr: {
-        hi: "Bonjour !",
-        test: "Test",
-    },
+    fr,
+    en
 };
 
 const i18n = createI18n({
-    locale: "fr",
+    locale: "en",
     messages: messages,
 });
 

@@ -1,8 +1,10 @@
 <template>
-  <select v-model="selectedCity">
-    <option v-for="city of cityWeather" :key="city.index" :value="city">{{ city.name }}</option>
-  </select>
-  <temperature-form/>
+  <div style="margin-top: 1em;">
+    <select v-model="selectedCity">
+      <option v-for="city of cityWeather" :key="city.index" :value="city">{{ city.name }}</option>
+    </select>
+    <temperature-form/>
+  </div>
   <city v-if="selectedCity.name" :name="selectedCity.name" :weather="selectedCity.weather"
         :temperature="selectedCity.temperature" :updated-at="selectedCity.updatedAt"></city>
 </template>

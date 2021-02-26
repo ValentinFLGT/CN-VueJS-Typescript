@@ -32,7 +32,9 @@ export default defineComponent({
 })
 </script>
 
-<style>
+<style lang="scss">
+@import "scss/globalStyle";
+
 html, body {
   margin: 0;
   padding: 0;
@@ -43,7 +45,7 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #262626;
+  color: $app-color;
 }
 
 #app_header {

@@ -3,7 +3,7 @@
   <div>
     <h1>Affichez la météo d'une ville</h1>
     <cities-form/>
-    <h1>Filtrez par température ({{filterByTemperature.length}})</h1>
+    <h1>Filtrez par température ({{ filterByTemperature.length }})</h1>
     <city v-for="city of filterByTemperature" :key="city.id" :name="city.name" :weather="city.weather"
           :temperature="city.temperature" :updated-at="city.updatedAt"></city>
   </div>
@@ -55,6 +55,7 @@ export default defineComponent({
 h1 {
   margin: 40px 0 0;
 }
+
 h4 {
   position: absolute;
   margin: 50px;

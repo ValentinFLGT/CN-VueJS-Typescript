@@ -1,5 +1,5 @@
 <template>
-  <h4>Rafraîchissement automatique : {{ formatSecondsInMinute }}</h4>
+  <h4>{{ $t('hi') }} Rafraîchissement automatique : {{ formatSecondsInMinute }}</h4>
   <div>
     <h1>Affichez la météo d'une ville</h1>
     <cities-form/>

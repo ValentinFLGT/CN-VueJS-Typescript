@@ -13,7 +13,7 @@ export const key: InjectionKey<Store<State>> = Symbol()
 
 export const index = createStore<State>({
     state: {
-        countdown: 30,
+        countdown: 300,
         cityWeather: [],
         selectedCities: [],
         temperature: 0,
@@ -30,7 +30,7 @@ export const index = createStore<State>({
             state.countdown--
         },
         resetCountdown(state) {
-            return state.countdown = 30
+            return state.countdown = 300
         },
 
         unloadCityWeatherData(state) {

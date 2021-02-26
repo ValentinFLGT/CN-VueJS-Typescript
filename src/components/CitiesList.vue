@@ -3,7 +3,8 @@
   <div>
     <h1>Liste des villes</h1>
     <cities-form/>
-    <city v-for="city of cityWeather" :key="city.id" :name="city.name" :weather="city.weather"
+    <h2>Filtrées par température ({{filterByTemperature.length}})</h2>
+    <city v-for="city of filterByTemperature" :key="city.id" :name="city.name" :weather="city.weather"
           :temperature="city.temperature" :updated-at="city.updatedAt"></city>
   </div>
 </template>
@@ -30,6 +31,20 @@ export default defineComponent({
       } else {
         return `${store.state.countdown} s`; // Return basic timer if no minutes
       }
+    },
+    filterByTemperature() {
+      const store = useStore()
+      const cities = store.state.cityWeather
+      const filteredCities: Array<object> = []
+
+      cities.forEach(city => {
+        let parsedCity = JSON.parse(JSON.stringify(city));
+
+        if (parsedCity.temperature > store.state.temperature) {
+          filteredCities.push(city)
+        }
+      })
+      return filteredCities
     },
     ...mapState(['cityWeather'])
   }

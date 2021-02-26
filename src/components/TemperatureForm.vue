@@ -16,9 +16,22 @@ export default defineComponent({
     return {
       options: [
         { id: 1, value: 0},
-        { id: 2, value: 10},
-        { id: 3, value: 15},
-        { id: 4, value: 20},
+        { id: 2, value: 1},
+        { id: 3, value: 2},
+        { id: 4, value: 3},
+        { id: 4, value: 4},
+        { id: 4, value: 5},
+        { id: 4, value: 6},
+        { id: 4, value: 7},
+        { id: 4, value: 8},
+        { id: 4, value: 9},
+        { id: 4, value: 10},
+        { id: 4, value: 11},
+        { id: 4, value: 12},
+        { id: 4, value: 13},
+        { id: 4, value: 14},
+        { id: 4, value: 15},
+        { id: 4, value: 20}
       ]
     }
   },

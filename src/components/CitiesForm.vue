@@ -3,7 +3,7 @@
     <option v-for="city of cityWeather" :key="city.index" :value="city">{{ city.name }}</option>
   </select>
   <temperature-form/>
-  <city v-if="selectedCity" :name="selectedCity.name" :weather="selectedCity.weather"
+  <city v-if="selectedCity.name" :name="selectedCity.name" :weather="selectedCity.weather"
         :temperature="selectedCity.temperature" :updated-at="selectedCity.updatedAt"></city>
 </template>
 
